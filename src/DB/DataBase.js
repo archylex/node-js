@@ -1,7 +1,3 @@
-const User = require('../resources/users/user.model');
-const Board = require('../resources/boards/board.model');
-const Task = require('../resources/tasks/task.model');
-
 const db = {
   Users: {},
   Boards: {},
@@ -25,20 +21,6 @@ const db = {
     }
   }
 };
-
-(() => {
-  const user = new User();
-  user.name = 'admin';
-  user.login = 'admin';
-  user.password = 'admin';
-  db.Users[user.id] = user;
-
-  const board = new Board();
-  db.Boards[board.id] = board;
-
-  const task = new Task({ boardId: board.id });
-  db.Tasks[task.id] = task;
-})();
 
 const getAll = tableName => Object.assign({}, db[tableName]);
 
