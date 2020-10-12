@@ -51,7 +51,9 @@ const updateData = async (tableName, id, data) => {
 const removeData = (tableName, id) => {
   const data = getData(tableName, id);
   if (data) {
-    db[`clearAfter${tableName}`](data);
+    if (db[`clearAfter${tableName}`] !== undefined) {
+      db[`clearAfter${tableName}`](data);
+    }
     delete db[tableName][id];
   }
 

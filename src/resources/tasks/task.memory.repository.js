@@ -3,7 +3,12 @@ const { TaskNotFound } = require('../../errors/errors');
 const TABLE_NAME = 'Tasks';
 
 const getAll = async boardId => {
-  return DB.getAll(TABLE_NAME).filter(task => task.boardId === boardId);
+  const allTasks = DB.getAll(TABLE_NAME);
+  const result = [];
+  for (const key of Object.keys(allTasks)) {
+    if (allTasks[key].boardId === boardId) result.push(allTasks[key]);
+  }
+  return result;
 };
 
 const get = async (boardId, id) => {

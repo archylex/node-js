@@ -4,8 +4,8 @@ const taskService = require('./task.service');
 
 router.route('/').get(async (req, res, next) => {
   try {
-    const boards = await taskService.getAll(req.params.boardId);
-    await res.json(boards);
+    const tasks = await taskService.getAll(req.params.boardId);
+    await res.json(tasks);
   } catch (e) {
     return next(e);
   }
@@ -13,8 +13,8 @@ router.route('/').get(async (req, res, next) => {
 
 router.route('/:id').get(async (req, res, next) => {
   try {
-    const board = await taskService.get(req.params.boardId, req.params.id);
-    res.status(200).send(board);
+    const task = await taskService.get(req.params.boardId, req.params.id);
+    res.status(200).send(task);
   } catch (e) {
     return next(e);
   }
@@ -22,13 +22,10 @@ router.route('/:id').get(async (req, res, next) => {
 
 router.route('/').post(async (req, res, next) => {
   try {
-    const board = await taskService.save(
-      new Task({
-        ...req.body,
-        boardId: req.params.boardId
-      })
-    );
-    res.status(200).send(board);
+    const task = new Task(req.body);
+    task.boardId = req.params.boardId;
+    const newTask = await taskService.save(task);
+    res.status(200).send(newTask);
   } catch (e) {
     return next(e);
   }
@@ -36,14 +33,11 @@ router.route('/').post(async (req, res, next) => {
 
 router.route('/:id').put(async (req, res, next) => {
   try {
-    const board = await taskService.update(
-      new Task({
-        ...req.body,
-        id: req.params.id,
-        boardId: req.params.boardId
-      })
-    );
-    res.status(200).send(board);
+    const task = new Task(req.body);
+    task.id = req.params.id;
+    task.boardId = req.params.boardId;
+    const newTask = await taskService.update(task);
+    res.status(200).send(newTask);
   } catch (e) {
     return next(e);
   }
