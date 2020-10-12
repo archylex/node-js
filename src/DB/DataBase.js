@@ -14,6 +14,15 @@ const db = {
         }
       }
     }
+  },
+  clearAfterBoards: board => {
+    if (board) {
+      for (const key of Object.keys(db.Tasks)) {
+        if (db.Tasks[key].boardId === board.id) {
+          delete db.Tasks[key];
+        }
+      }
+    }
   }
 };
 
