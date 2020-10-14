@@ -2,7 +2,10 @@ const DB = require('../../DB/DataBase');
 const { BoardNotFound } = require('../../errors/errors');
 const TABLE_NAME = 'Boards';
 
-const getAll = async () => DB.getAll(TABLE_NAME);
+const getAll = async () => {
+  const boards = await DB.getAll(TABLE_NAME);
+  return Object.values(boards);
+};
 
 const get = async id => {
   const board = await DB.getData(TABLE_NAME, id);
@@ -27,9 +30,10 @@ const update = async (id, board) => {
 };
 
 const remove = async id => {
-  if (!(await DB.removeData(TABLE_NAME, id))) {
+  /* if (!(await DB.removeData(TABLE_NAME, id))) {
     throw new BoardNotFound(id);
-  }
+  }*/
+  return await DB.removeData(TABLE_NAME, id);
 };
 
 module.exports = { getAll, get, save, update, remove };

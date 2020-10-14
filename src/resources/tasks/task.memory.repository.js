@@ -40,9 +40,10 @@ const update = async task => {
 };
 
 const remove = async (boardId, id) => {
-  if (!(await DB.removeData(TABLE_NAME, id))) {
+  /* if (!(await DB.removeData(TABLE_NAME, id))) {
     throw new TaskNotFound(id);
-  }
+  }*/
+  return await DB.removeData(TABLE_NAME, id);
 };
 
 module.exports = { getAll, get, save, update, remove };

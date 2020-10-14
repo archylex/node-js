@@ -8,7 +8,7 @@ const handle = (err, req, res, next) => {
   ) {
     res.status(err.statusCode).send(err.message);
   } else if (err) {
-    res.sendStatus(500);
+    res.status(404).send('Not found');
   }
   next();
 };
